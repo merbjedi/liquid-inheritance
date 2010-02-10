@@ -46,6 +46,17 @@ class TestFileSystem
         from nested
         {% endblock %}
       }
+    elsif path == "layout_with_include"
+      %{
+        {% include 'partial' %}
+        {% block thing %}
+          Blah
+        {% endblock %}
+      }
+    elsif path == "partial"
+      %{
+        YO YO
+      }
     end
   end
   
@@ -169,5 +180,23 @@ class LiquidInheritanceTest < Test::Unit::TestCase
       
       assert_contains(res, /rarrgh/)
     end
+    
+    should 'should render layouts with includes in them' do
+      template = Liquid::Template.parse %{
+        {% extends 'layout_with_include' %}
+        
+        {% block thing %}
+        Dude
+        {% endblock %}
+      }
+      res = template.render
+      
+      # "Dude" comes from the block override
+      assert_contains(res, /Dude/)
+
+      # "YO YO" comes from the partial
+      assert_contains(res, /YO YO/)
+    end
+    
   end
 end
