@@ -26,7 +26,7 @@ class TestFileSystem
         
       end
       }
-    elsif 'nested'
+    elsif path == 'nested'
       %{
         {% extends 'complex' %}
         
@@ -38,7 +38,7 @@ class TestFileSystem
         from nested (another)
         {% endblock %}
       }
-    else
+    elsif path == "nested2"
       %{
         {% extends 'complex' %}
         
